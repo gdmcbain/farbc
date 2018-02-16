@@ -1,0 +1,822 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage[round]{natbib}
+
+\newcommand{\Reals}{{\mathcal R}} % not quite right
+
+\begin{document}
+
+\title{Asymptotic boundary conditions}
+
+\author{G. D. McBain\thanks{School of Aerospace, Mechanical, \&
+    Mechatronic Engineering, The University of Sydney}}
+
+\date{1 Apr.\ 2003} \maketitle
+
+\section{Introduction}
+
+Unbounded domains for ordinary differential equations are often
+conveniently truncated for numerical solution.  We consider here the
+boundary conditions to be imposed at the truncation point.
+
+For eigenvalue problems, all boundary conditions are homogeneous, and
+this should apply too to the condition at the truncation point.
+
+We consider problems of the form:
+\begin{eqnarray}
+y'(x)  =   A(x) y(x) & \qquad\qquad & (a < x < \infty) 
+\label{eqn:ode} \\
+y(x)  \rightarrow  0 & \qquad\qquad & (x\rightarrow\infty).
+\label{eqn:vanishes_at_infinity}
+\end{eqnarray}
+
+\section{Zero boundary conditions}
+
+The simplest replacement for (\ref{eqn:vanishes_at_infinity}) is the
+`zero boundary condition'
+\begin{equation}
+y(b) = 0,
+\end{equation}
+for some $b\in (a,\infty)$.  Clearly this is fairly crude and we do
+not discuss it further; see \citet[pp.~91--92]{Fox90:NST}.
+
+\section{Gill \& Davey's far field conditions}
+\label{sec:Gill}
+
+If the coefficients in (\ref{eqn:ode}) tend to constants:
+\begin{equation}
+\lim_{x\rightarrow\infty} A(x)-A_\infty = 0
+\end{equation}
+where $A_\infty$ is independent of $x$, then we are led to consider
+the solutions to 
+\begin{equation}
+y'(x) = A_\infty y(x).
+\label{eqn:far_field_ODE}
+\end{equation}
+Provided the eigenvalues of $A_\infty$ are distinct \footnote{This
+restriction is relaxed in the more rigorous method of
+\citet{Lentini80:SINUM-17-577}.  With luck in numerical work rounding
+errors will guarantee genericity; however, particular parameter
+choices may cause difficulties however, as, for example, $\sigma=1$ in
+the Plapp equations: cf.\ (\ref{eqn:lambda_1}) and
+(\ref{eqn:lambda_3}).}, the solutions to (\ref{eqn:far_field_ODE}) are
+\begin{equation}
+y(x) = \zeta_r \mathrm{e}^{\lambda_r x}
+\end{equation}
+where $\zeta_r$ is an eigenvector of $A_\infty$ and $\lambda$ is the
+corresponding eigenvalue.  In matrix form:
+\begin{eqnarray}
+A_\infty Z & = & Z\Lambda
+\label{eqn:eigenvalue} \\
+& \equiv & [\zeta_1 \zeta_2 \ldots \zeta_n]
+        \:\mathrm{diag}[\lambda_1 \lambda_2 \ldots \lambda_n] \\
+y(x) & = & Z \mathrm{e}^{\Lambda x} a.
+\label{eqn:general_far_field_solution}
+\end{eqnarray}
+where $a$ is a vector of coefficients, and any dependence on $x$ is
+shown explicitly.
+
+The condition that a solution $y$ should be bounded for large $x$ then
+is equivalent to the requirement that
+\begin{equation}
+(\Re \lambda_r > 0) \Rightarrow (a_r = 0).
+\end{equation}
+
+\subsection{The connection with polynomials}
+
+The general homogeneous linear ordinary differential equations with
+constant coefficients
+\begin{equation}
+p_0 \frac{\mathrm{d}^n y}{\mathrm{d}x^n}
++ p_1 \frac{\mathrm{d}^{n-1} y}{\mathrm{d}x^{n-1}}
++ \cdots
++ p_{n-1} \frac{\mathrm{d} y}{\mathrm{d}x}
++ p_{n} y = 0
+\label{eqn:homogeneous}
+\end{equation}
+has the \textit{auxiliary equation}
+\begin{equation}
+p_0 m^n
++ p_1 m^{n-1}
++ \cdots
++ p_{n-1} m
++ p_{n} = 0
+\label{eqn:auxiliary}
+\end{equation}
+and when the roots $\{m_i\}_{i=1}^n$ of (\ref{eqn:auxiliary}) are
+distinct, the general solution of (\ref{eqn:homogeneous}) is:
+\begin{equation}
+\sum_{i=1}^n a_i \mathrm{e}^{m_i x}
+\label{eqn:general_solution}
+\end{equation}
+(See, for example, \citealp[ch.~3]{Piaggio65:ETD}).
+
+Now the coefficients of a polynomial can be expressed in terms of its
+leading coefficient and the \emph{elementary symmetric functions} of
+its roots:
+\begin{eqnarray}
+p_0 & = & p_0 \\
+p_0 \sum_i m_i & = & -p_1 \\
+p_0 \sum_i \sum_{j\not=i} m_i m_j & = & p_2 \\
+p_0 \sum_i \sum_{j\not=i} \sum_{k\not=i,j} m_i m_j m_k & = & -p_3 \\
+\ldots \\
+p_0 \prod_i m_i & = & (-1)^n p_n.
+\end{eqnarray}
+(See, for example, \citealp[ch.~5]{Turnbull52:TE}).
+
+Thus, reversing the transition from differential equation
+(\ref{eqn:homogeneous}) to auxiliary
+equation (\ref{eqn:auxiliary}) and general solution
+(\ref{eqn:general_solution}), we find that any linear combination of
+terms $\exp(m_i x)$ with distinct $m_i$ will satisfy the differential
+equation
+\begin{eqnarray}
+\frac{\mathrm{d}^n y}{\mathrm{d} x^n}
+- (m_1+m_2+\cdots) \frac{\mathrm{d}^{n-1} y}{\mathrm{d} x^{n-1}}
++ (m_1 m_2 + m_1 m_3 + \cdots) 
+        \frac{\mathrm{d}^{n-2} y}{\mathrm{d} x^{n-2}} & &  
+\label{eqn:ESF_ABC} \\
+- (m_1 m_2 m_3 + \cdots) 
+        \frac{\mathrm{d}^{n-3} y}{\mathrm{d} x^{n-3}}
++\cdots
++ (-1)^n m_1 m_2 m_3\ldots & = & 0. \nonumber
+\end{eqnarray}
+
+Specifically, of the eigenvalues $\lambda$ of the far-field matrix
+$A_\infty$ with negative real parts, choose the $n$ closest to zero,
+and assume that the solution in the far field is a linear combination
+of terms in $\mathrm e^{\lambda_i x}$.  For increasing $n$ we get:
+\begin{align}
+   y&=0 &(n=0) \\
+   y' - \lambda_1 y &=0 &(n=1) \\
+   y'' - (\lambda_1+\lambda_2) y' + \lambda_1 \lambda_2 y &=0 &(n=2) \\
+   \ldots \nonumber
+\end{align}
+
+This method with $n=2$ was used by \citet[eq.~2.5]{Gill69:JFM-35-775}.
+
+
+\section{Daniels \& Patterson's far field conditions}
+\label{sec:Daniels}
+
+\citet{Plapp57:JAeS-24-318} derived the equivalent of the
+Orr--Sommerfeld equations for the linear stability a vertically
+uniform Boussinesq flow and temperature field.  If in (1) and (2) of
+\citet{Plapp57:JAeS-24-318} we set $f=1$ to fix the
+nondimensionalization, and $\omega=0$ for a vertical surface, the
+equations may be written in the form (\ref{eqn:ode}) with
+\begin{equation}
+y = \left[\begin{array}{c}
+\varphi\\
+\varphi'\\
+\varphi''\\
+\varphi'''\\
+s \\
+s'
+      \end{array}
+\right]
+\end{equation}
+and $A(x,c)=$
+\begin{equation}
+\left[\begin{array}{cccccc}
+0 & 1 & 0 & 0 & 0 & 0 \\
+0 & 0 & 1 & 0 & 0 & 0  \\
+0 & 0 & 0 & 1 & 0 & 0  \\
+\{-\alpha^4-\mathrm{i}\alpha^3 R (\bar{u}-c)-\mathrm{i}\alpha R\bar{u}''\} & 
+        0 & 
+  \{2\alpha^2+\mathrm{i}\alpha R(\bar{u}-c)\} & 0 & 0 & -1  \\
+0 & 0 & 0 & 0 & 0 & 1  \\
+-\mathrm{i}\alpha R \sigma \bar{\theta}' & 
+        0 & 0 & 0 & \{\alpha^2+\mathrm{i}\alpha R\sigma (\bar{u}-c) \} & 0  
+                 \end{array}\right].
+\end{equation}
+
+
+If we then set $\bar{u}=\bar{u}''=\bar{\theta}'=0$ (where Plapp uses
+$\bar{u}$ to denote the base value of $u$, not its complex conjugate)
+for the far field, we obtain:
+\begin{equation}
+\varphi'''' - (2\alpha^2-\mathrm{i}\alpha R c)\varphi'' 
++ \alpha^2(\alpha^2-\mathrm{i}\alpha R c)\varphi + s' = 0
+\label{eqn:vorticity}
+\end{equation}
+and
+\begin{equation}
+s'' - (\alpha^2-\mathrm{i}\alpha R \sigma c) s = 0.
+\label{eqn:temperature}
+\end{equation}
+The latter implies $s \propto \exp(\lambda_1 x)$ or
+\begin{equation}
+s' - \lambda_1 s = 0,
+\label{eqn:first_ffc}
+\end{equation}
+where
+\begin{equation}
+\lambda_1^2 = \alpha^2-\mathrm{i}\alpha R \sigma c,
+\label{eqn:lambda_1}
+\end{equation}
+and we take $\Re{\lambda_1} < 0$ for a temperature disturbance bounded
+at infinity.  Equation (\ref{eqn:first_ffc}) furnishes a first far
+field condition; it is equivalent to (2.5) of \citet{Gill69:JFM-35-775}
+and (6.4) of \citet{Daniels97:JFM-335-57}.  
+
+A particular integral of (\ref{eqn:vorticity}) will be proportional to
+$\exp(\lambda_1 x)$: say $A s_0 \exp(\lambda_1 x)$.  Substitution
+gives
+\begin{equation}
+A\left\{ \lambda_1^4 -(2\alpha^2+\mathrm{i}\alpha R c)\lambda_1^2
++\alpha^2(\alpha^2-\mathrm{i}\alpha R c)\right\} 
++ \lambda_1 = 0,
+\end{equation}
+so that
+\begin{equation}
+A = \frac{-\lambda_1}
+{\lambda_1^4 -2\alpha^2\lambda_1^2+\alpha^4 + 
+\mathrm{i} \alpha R c (\lambda_1^2 - \alpha^2)},
+\end{equation}
+which is equivalent to (6.3) of \citet{Daniels97:JFM-335-57}.  Note that
+$A$ can also be expressed as
+\begin{equation}
+A =
+\frac{-\lambda_1}{(\lambda_1^2-\lambda_2^2)(\lambda_1^2-\lambda_3^2)}.
+\end{equation}
+
+The auxiliary equation of the homogeneous part of
+(\ref{eqn:vorticity}) is
+\begin{equation}
+\lambda^4 - (2\alpha^2-\mathrm{i}\alpha R c)\lambda^2
++\alpha^2(\alpha^2 - \mathrm{i}\alpha R c) = 0
+\end{equation}
+which has roots $\lambda^2=\alpha^2, \alpha^2-\mathrm{i}\alpha R c$;
+take
+\begin{eqnarray}
+\lambda_2 & = & -\alpha\label{eqn:lambda_2} \\
+\lambda_3 & = & -\sqrt{\alpha^2-\mathrm{i}\alpha R c},
+\label{eqn:lambda_3}
+\end{eqnarray}
+where the branch of the complex square root with nonnegative real part
+is taken so that $\Re{\lambda_i}<0$ for $i=1,2,3$.  Following
+(2.5\,\textit{ii}) of \citet{Gill69:JFM-35-775}, the complementary
+function $B s_0 \exp(-\lambda_2 x) + C s_0 \exp(-\lambda_3 x)$
+satisfies
+\begin{equation}
+\varphi'' - (\lambda_2 + \lambda_3)\varphi' + \lambda_2 \lambda_3 = 0,
+\end{equation}
+and substituting the complete solution 
+\begin{equation}
+\varphi = s_0 \{A\mathrm{e}^{\lambda_1 x} + B\mathrm{e}^{\lambda_2 x} +
+C\mathrm{e}^{\lambda_3 x}\}
+\end{equation}
+gives
+\begin{equation}
+\varphi'' - (\lambda_2 + \lambda_3)\varphi' + \lambda_2 \lambda_3 \varphi
+- A \{\lambda_1^2 - \lambda_1 (\lambda_2 + \lambda_3) +
+\lambda_2\lambda_3\} s = 0,\label{eqn:second_ffc}
+\end{equation}
+which is (6.5) of \citet{Daniels97:JFM-335-57}\footnote{Apart from a
+misprint: the first subscript 1 should be replaced by 3.} and gives a
+second far field condition.
+
+Finally, the complete $\varphi$ satisfies (\ref{eqn:ESF_ABC}) with
+$n=3$:
+\begin{equation}
+\varphi'''(x) -
+(\lambda_1 + \lambda_2 + \lambda_3) \varphi''(x) +
+(\lambda_1\lambda_2 + \lambda_1 \lambda_3 + \lambda_2 \lambda_3)
+\varphi'(x) 
+- \lambda_1 \lambda_2 \lambda_3 \varphi(x) = 0,\label{eqn:third_ffc}
+\end{equation}
+which is (6.6) of \citet{Daniels97:JFM-335-57}.
+
+\section{Keller's general method}\label{sec:Keller}
+
+A more formal procedure for deriving asymptotic boundary conditions
+was given by \citet[pp.~53--8]{Keller76:NST} and
+\citet{Lentini80:SINUM-17-577}.  In addition to being more rigorous than
+the procedure of \citet{Gill69:JFM-35-775}, the method is far more
+algorithmic than that of \citet{Daniels97:JFM-335-57}, even to the
+extent of being simply implemented in a general numerical computer
+program.
+
+Left and right multiplying the matrix eigenvalue equation
+(\ref{eqn:eigenvalue}) by the inverse of the eigenvector matrix gives
+\begin{equation}
+Z^{-1} A_\infty  = \Lambda Z^{-1},
+\end{equation}
+of which the $i$-th row is
+\begin{equation}
+\xi_i A_\infty  = \lambda_i \xi_i,
+\label{eqn:xi}
+\end{equation}
+so that the rows of $Z^{-1}$ are the left eigenvectors (or `row
+eigenvectors') of $A_\infty$; these are clearly biorthonormal with the
+right eigenvectors:
+\begin{eqnarray}
+Z^{-1} Z & = & I \\
+\xi_i \zeta_j & = & \delta_{ij}.
+\end{eqnarray}
+
+Thus, if we pick out those $p$ left eigenvectors corresponding to
+eigenvalues of $A_\infty$ with positive real part (assume for
+convenience that the eigenvalues are numbered in order of decreasing
+real part) and form the $p\times n$ asymptotic boundary condition
+matrix
+\begin{equation}
+C_{\infty}^{+} \equiv \left[\begin{array}{c}
+        \xi_1 \\
+        \xi_2 \\
+        \vdots \\
+        \xi_p           \end{array}\right]
+\end{equation}
+and left-multiply (\ref{eqn:general_far_field_solution})
+\begin{eqnarray}
+  C_\infty^+ y(x) & = & C_\infty^+ Z \mathrm{e}^{\Lambda x} a 
+  \label{eqn:ABC} \\
+  & = & 
+  I_{p\times n} % I_{p\times n} == [I_{p*p} 0_{p*(n-p)}]
+  \mathrm{e}^{\Lambda x} a \\
+  & = & 
+  \left[
+    \begin{array}{c}
+      \mathrm{e}^{\lambda_1 x} a_1 \\
+      \mathrm{e}^{\lambda_2 x} a_2\\
+      \vdots \\
+      \mathrm{e}^{\lambda_p x} a_p            
+    \end{array}
+  \right]
+\end{eqnarray}
+then the condition that the solution be contain only eigen-components
+bounded at infinity is just that this vanish; i.e.\ we replace
+\begin{equation}
+y(x) \rightarrow 0 \qquad\qquad (x\rightarrow\infty)
+\end{equation}
+with
+\begin{equation}
+C_\infty^+ y(x) = 0_{p\times 1}
+\end{equation}
+at some finite $x$ (for which the asymptotic approximation $A(x)\sim
+A_\infty$ is reasonable).  
+
+\subsection{Example: the Plapp equations}
+
+If the state vector is taken as\footnote{A tidier matrix would result
+if the third element were instead taken as $\varphi''-\alpha^2\varphi$
+and the fourth as its derivative (\citealp[p.~57]{Keller76:NST};
+\citealp[p.~207]{Drazin81:HS}.)}  $[\varphi, \varphi', \varphi'',
+\varphi''', \theta, \theta']^T$, the far field Plapp matrix $A_\infty
+$ is
+\begin{equation}
+ \left[\begin{array}{cccccc}
+0 & 1 & 0 & 0 & 0 & 0 \\
+0 & 0 & 1 & 0 & 0 & 0  \\
+0 & 0 & 0 & 1 & 0 & 0  \\
+-\alpha^2(\alpha^2-\mathrm{i}\alpha R c) & 0 & 
+  (2\alpha^2-\mathrm{i}\alpha c R) & 0 & 0 & -1  \\
+0 & 0 & 0 & 0 & 0 & 1  \\
+0 & 0 & 0 & 0 & (\alpha^2-\mathrm{i}\alpha c R\sigma) & 0  
+                 \end{array}\right],
+\end{equation}
+or in terms of the decay constants defined by (\ref{eqn:lambda_1}),
+(\ref{eqn:lambda_2}), and (\ref{eqn:lambda_3})
+\begin{equation}
+\left[\begin{array}{cccccc}
+0 & 1 & 0 & 0 & 0 & 0 \\
+0 & 0 & 1 & 0 & 0 & 0  \\
+0 & 0 & 0 & 1 & 0 & 0  \\
+-\lambda_2^2 \lambda_3^2 & 0 & 
+  \lambda_2^2+\lambda_3^2 & 0 & 0 & -1  \\
+0 & 0 & 0 & 0 & 0 & 1  \\
+0 & 0 & 0 & 0 & \lambda_1^2 & 0  
+                 \end{array}\right].
+\end{equation}
+The three left eigenvectors corresponding to the three eigenvalues
+with positive real part ($-\lambda_1, -\lambda_2$, and $-\lambda_3$)
+are the (normalized) rows of
+\begin{eqnarray}
+\left[\begin{array}{cccccc} 0 & 0 & 0 & 0 & -\lambda_1 &
+1\\
+-\lambda_2\lambda_3^2(\lambda_2^2-\lambda_1^2) &
+\lambda_3^2(\lambda_2^2-\lambda_1^2) &
+\lambda_2(\lambda_2^2-\lambda_1^2) & -(\lambda_2^2-\lambda_1^2) &
+\lambda_1^2 & -\lambda_2\\
+-\lambda_3\lambda_2^2(\lambda_3^2-\lambda_1^2) &
+\lambda_2^2(\lambda_3^2-\lambda_1^2) &
+\lambda_3(\lambda_3^2-\lambda_1^2) & -(\lambda_3^2-\lambda_1^2) &
+\lambda_1^2 & -\lambda_3 \end{array}\right].
+\label{eqn:xi_123}
+\end{eqnarray}
+
+Clearly the first row of (\ref{eqn:xi_123}) corresponds to
+(\ref{eqn:first_ffc}), but I have not yet determined the relation
+between the last two rows and (\ref{eqn:second_ffc}) and
+(\ref{eqn:third_ffc}).  As discussed in the comparison between methods
+in the conclusion, they may not be in agreement.
+
+These equations are exactly those derived by
+\citet[App.~C]{Nachtsheim63:SFC} by a direct method.  Nachtsheim
+expanded the solution of the far field equations in terms of the six
+linearly independent solutions and required that the coefficients of
+the unbounded solutions vanish; this implied the vanishing of three
+determinants, which lead directly to equations (\ref{eqn:xi_123}).
+Nachtsheim's method is therefore equivalent to the present one, though
+less amenable to automatic computation.  Nachtsheim attributed the
+technique to \citet{Brown61:BLF-913}.
+
+\subsection{Left Schur vectors v.\ left eigenvectors}
+
+The Schur vectors of a matrix and a reason for using them are given by
+\citet{Anderson99:LUG}:
+\begin{quotation}
+In the complex case the Schur factorization is
+\begin{displaymath}
+A=ZTZ^H
+\end{displaymath}
+where $Z$ is unitary and $T$ is a complex upper triangular matrix.
+
+The columns of $Z$ are called the \emph{Schur vectors}.  For each $k$
+($1\leq k\leq n$) the first $k$ columns of $Z$ form an orthonormal
+basis for the \emph{invariant subspace} corresponding to the first $k$
+eigenvalues on the diagonal of $T$.  Because this basis is
+orthonormal, it is preferable in many applications to compute Schur
+vectors rather than eigenvectors.  It is possible to order the Schur
+factorization so that any desired set of $k$ eigenvalues occupy the
+leading positions on the diagonals of $T$.
+\end{quotation}
+
+Thus if we compute the Schur decomposition of the conjugate transpose
+of the far field coefficient matrix:
+\begin{equation}
+A_\infty^H = U S U^H,
+\end{equation}
+where $S$ has been sorted to have the eigenvalues with positive real
+part on the top-left part of the diagonal, then set
+\begin{equation}
+C_\infty^+ \equiv \left[\begin{array}{c}
+        u_1^H \\
+        u_2^H \\
+        \vdots \\
+        u_p^H           \end{array}\right],
+\end{equation}
+where $u_i$ is the $i$-th column of $U$.  
+
+The conjugate transpose of the equation defining the left eigenvectors
+of $A_\infty$ (\ref{eqn:xi}) is
+\begin{equation}
+A_\infty^H \xi_i^H = \overline{\lambda_i} \xi_i^H,
+\end{equation}
+so that the $\xi_i^H$ are the right eigenvectors of $A_\infty^H$ (see,
+e.g., \citealp[p.~267]{Stewart73:IMC}).
+
+As, by construction, the first $r$ Schur vectors $\{u_i\}_{i=1}^r$
+span the same space as the first $r$ eigenvectors of $A_\infty^H$,
+$\{\xi_i^H\}_{i=1}^r$, they can be expressed: $u_1 = \overline{k_{11}}
+\xi_1^H$, $u_2 = \overline{k_{21}} \xi_1^H + \overline{k_{22}}
+\xi_2^H$, etc., for some constants $k$.
+\begin{equation}
+C_\infty^+ \equiv \left[\begin{array}{c}
+        u_1^H \\
+        u_2^H \\
+        \vdots \\
+        u_p^H           \end{array}\right]
+=\left[\begin{array}{c}
+        k_{11} \xi_1 \\
+        k_{21} \xi_1 + k_{22} \xi_2 \\
+        \vdots \\
+        k_{p1} \xi_1 +\cdots + k_{pp} \xi_p
+                \end{array}\right]
+\end{equation}
+Note that the diagonal coefficients $k_rr$ cannot vanish since that
+would imply that the $r$-th eigenvector was linearly dependent on the
+first $(r-1)$.
+
+If this left-multiplies the general solution of the differential
+equation $Z\mathrm{e}^{\Lambda x}a$ we get, in place of
+(\ref{eqn:ABC}),
+\begin{eqnarray}
+C_\infty^+ y(x) & = & C_\infty^+ Z \mathrm{e}^{\Lambda x} a 
+\label{eqn:ABC_Schur} \\
+& = & \left[\begin{array}{c}
+        k_{11} \xi_1 \\
+        k_{21} \xi_1 + k_{22} \xi_2 \\
+        \vdots \\
+        k_{p1} \xi_1 +\cdots + k_{pp} \xi_p
+                \end{array}\right] \left[\zeta_1 \zeta_2\cdots \zeta_n\right]
+\mathrm{e}^{\Lambda x} a  \\
+& = & \left[
+        \begin{array}{cc}
+                {\begin{array}{ccccc}
+                k_{11}  & 0 & \cdots  \\
+                k_{21}  & k_{22}  & 0 & \cdots  \\
+                \vdots \\
+                k_{p1}  & k_{p2}  & \cdots & 
+                k_{pp} 
+                \end{array}}
+        & 0_{(n-p)\times n}
+        \end{array}
+\right] \left[\begin{array}{c} 
+                \mathrm{e}^{\lambda_1 x} a_1 \\
+                \mathrm{e}^{\lambda_2 x} a_2 \\
+                \vdots \\
+                \mathrm{e}^{\lambda_n x} a_n
+              \end{array}\right] \nonumber \\
+& = & \left[
+                {\begin{array}{ccccc}
+                k_{11}  & 0 & \cdots  \\
+                k_{21}  & k_{22}  & 0 & \cdots  \\
+                \vdots \\
+                k_{p1}  & k_{p2}  & \cdots & 
+                k_{pp} 
+                \end{array}}
+\right] \left[\begin{array}{c} 
+                \mathrm{e}^{\lambda_1 x} a_1 \\
+                \mathrm{e}^{\lambda_2 x} a_2 \\
+                \vdots \\
+                \mathrm{e}^{\lambda_p x} a_p
+              \end{array}\right] 
+\end{eqnarray}
+
+Since $k_{rr}\not= 0$, for $1\leq r\leq n$ there are no zeros on the
+diagonal of this triangular matrix, the matrix is not singular and
+setting (\ref{eqn:ABC_Schur}) to zero demands $\mathrm{e}^{\lambda_r
+x} a_r = 0$, which implies
+\begin{equation}
+a_r = 0 \qquad\qquad( 1\leq r < p);
+\end{equation}
+i.e.\ that the solution have no unbounded eigen-component.
+
+\subsection{Implementation}
+
+As mentioned in the introduction to this section, an important
+advantage of this method is that it is entirely automatic and so
+removes the need for sometimes messy asymptotic analysis of the
+differential equation.  This is even more important in the case of the
+Gill--Davey equations than for the Plapp equations, since the far
+field auxiliary equation of the former is
+\begin{equation}
+(\lambda^2-\alpha^2)(\lambda^2-\alpha^2+\mathrm{i}\alpha R c)
+(\lambda^2-\alpha^2+\mathrm{i}\alpha\sigma R c) + 4\lambda^2 = 0,
+\end{equation}
+which with the addition of the term $4\lambda^2$ (arising from the
+background stratification), is not so easily factored.
+
+Freely available routines to compute Schur vectors are \texttt{ZGEES}
+in LAPACK, and \texttt{schur} in GNU Octave~\citep{Eaton02:GOM}.
+Octave and modern Fortran implementations of the method are listed in
+the appendix.
+
+\section{Conclusion}
+
+The essential difference between the `matching' methods of
+\S\S\,\ref{sec:Gill}--\ref{sec:Daniels} and the `left eigenvector'
+methods of \S\,\ref{sec:Keller} is that in the former, the solution is
+accepted if it lies in the space spanned by the bounded (for
+$x\rightarrow\infty$) eigen-solutions of the asymptotic
+constant-coefficient problem, whereas in the latter, the solution is
+accepted if it contain no component of any unbounded eigen-solution.
+Since, in general, the asymptotic coefficient matrix $A_\infty$ is not
+Hermitian, its eigenvectors are not orthogonal, so that these two
+conditions are not the same.
+
+The second difference between the methods is that the latter allows
+automatic computation of the required boundary conditions.
+
+\appendix
+
+\section{Implementation of the left Schur vector method}
+
+\subsection{Implementation in GNU Octave}
+
+Comments and error-checking have been omitted for concision (the body
+of the function contains only three lines of code!), but:
+\begin{enumerate}
+\item 
+ With second argument ``a'', \texttt{schur} can sort the eigenvalues
+ of its first argument so that those with negative real part come
+ first; the reverse option is not provided.  Thus, we pass
+ \texttt{schur} $-A_\infty^H$, rather than $A_\infty^H$ and then
+ change the sign of the results. 
+
+\item \texttt{p} counts the eigenvalues of $A_\infty^H$ (these being
+the diagonal elements of the Schur matrix) with positive real part;
+this is the same as the number for $A_\infty$, since their eigenvalues
+are just complex conjugates.
+
+\item The third line puts the complex transpose of the first
+\texttt{p} columns of the matrix of Schur vectors of $A_\infty$ into
+the return value.
+\end{enumerate}
+
+\begin{verbatim}
+function b = schur_abc(a)
+  [zh, th] = schur (-(a'), "a");
+  p = sum (real (diag (-th)) > 0);
+  b = (-zh(:,1:p))';
+endfunction
+\end{verbatim}
+
+\subsection{Fortran implementation}
+
+The same method implemented in Fortran (standard Fortran 90) is a
+little longer (about sixty lines, excluding comments); however much of
+this is due to the large number of arguments to LAPACK's
+\texttt{ZGEES}, which could be hidden by using a `wrapper'.
+
+\begin{verbatim}
+
+  SUBROUTINE schur_abc(a,b,lwork_factor)
+    IMPLICIT NONE
+    COMPLEX(KIND=8), DIMENSION(:,:), INTENT(IN) :: a
+    COMPLEX(KIND=8), DIMENSION(:,:), INTENT(OUT) :: b
+    INTEGER, INTENT(IN), OPTIONAL :: lwork_factor
+
+    ! Return an asymptotic boundary condition matrix for the ordinary
+    ! differential equation 
+    !
+    !      y'(x) = a y(x) 
+    !
+    ! to replace 
+    !
+    !      y(x) -> 0 
+    !
+    ! for unbounded x with
+    !
+    !      b y(x) = 0
+    !
+    ! at some large but finite x.  On output, P is the number of rows;
+    ! i.e. the number of eigenvalues of A with positive real part.
+
+    INTEGER, PARAMETER :: minimal_lwork_factor = 2
+    INTEGER :: lwork
+
+    INTEGER :: info, n, p
+    LOGICAL, ALLOCATABLE, DIMENSION(:) :: bwork
+    REAL(KIND=8), ALLOCATABLE, DIMENSION(:) :: rwork
+    COMPLEX(KIND=8), ALLOCATABLE, DIMENSION(:,:) :: ah, vs
+    COMPLEX(KIND=8), ALLOCATABLE, DIMENSION(:) :: lambda ! ZGEEV's W
+    COMPLEX(KIND=8), ALLOCATABLE, DIMENSION(:) :: work
+
+    n = SIZE(a,1)
+
+    IF (PRESENT(lwork_factor)) THEN
+       lwork = n*MAX(minimal_lwork_factor,lwork_factor)
+    ELSE
+       lwork = n*minimal_lwork_factor
+    END IF
+
+    ALLOCATE(ah(n,n),vs(n,n),lambda(n),work(lwork),rwork(n),bwork(n))
+
+    ah = CONJG(TRANSPOSE(a))
+
+    CALL ZGEES('V', 'S', nonnegative_real_part, n, ah, &
+         n, p, lambda, vs, n, work, lwork, rwork, bwork, info)
+
+    DEALLOCATE(ah,work,rwork,bwork)
+
+    CALL check_zgees_info(info, n) ! abort for nonzero info
+
+    ! Put conjugate transpose of first P cols of VS into P rows of B. 
+
+    IF (SIZE(b,1) /= p) THEN
+       PRINT *, 'schur_abc: The number of eigenvalues (', p, ') with '
+       PRINT *, "positive real part doesn't match rows of B, ", SIZE(b,1)
+       STOP 
+    END IF
+
+    b = CONJG(TRANSPOSE(vs(:,1:p))) 
+    DEALLOCATE(vs,lambda)
+
+  CONTAINS 
+
+    SUBROUTINE check_zgees_info(info,n) 
+      INTEGER, INTENT(IN) :: info, n
+
+      SELECT CASE (info)
+      CASE (0)
+         CONTINUE                   ! `successful exit'
+      CASE (:-1)
+         PRINT *, 'ZGEES illegal value for argument ', -info
+         STOP
+      CASE (1:)
+         SELECT CASE (info-n)
+         CASE (:0)
+            PRINT *, 'ZGEES QR algorithm failed to converge.'
+            STOP
+         CASE (1)  
+            PRINT *, 'ZGEES: Indistinct eigenvalues.'
+            STOP
+         CASE (2)
+
+            ! 'after reordering, roundoff changed values of some
+            ! complex eigenvalues so that leading eigenvalues in the
+            ! Schur form no longer satisfy SELECT = .TRUE..  This
+            ! could be caused also be caused by underflow due to
+            ! scaling.' 
+
+            PRINT *, 'ZGEES: Borderline eigenvalues.'
+            STOP
+         END SELECT
+      END SELECT
+    END SUBROUTINE check_zgees_info
+  END SUBROUTINE schur_abc
+
+  LOGICAL FUNCTION nonnegative_real_part(z)
+    IMPLICIT NONE
+    COMPLEX(KIND=8), INTENT(IN) :: z
+
+    ! Return .TRUE. if the real part of Z is nonnegative
+
+    nonnegative_real_part = (REAL(z) >= REAL(0,KIND(z)))
+
+  END FUNCTION nonnegative_real_part
+
+\end{verbatim}
+
+\section{Later additions}
+
+\subsection{Unsighted articles}
+
+An unsighted article by \citet{Herron87:SIREV-29-597} may be relevant.
+
+According to \citet{Allen02:NM-92-197}, `Asymptotic conditions for
+integration using the compound matrix method have been derived by Ng
+and Reid [31] and Davey [14].'  The references are to
+\citet{Ng80:JCP-38-275} and \citet{Davey82:SMC-137}.
+
+\subsection{Levinson's Theorem}
+\label{sec:Levinson}
+
+I haven't looked into this too much yet, but the following extract
+from \citet[at pp.~200--201]{Allen02:NM-92-197} is suggestive.
+\begin{quotation}
+For example, consider the Schr\"odinger type equation on a semi-infinite interval, 
+\begin{displaymath}
+u_xx + a(x) u = \lambda u, 
+\qquad 0\leq x\leq +\infty, 
+\qquad a(x)\rightarrow 0 \mathrm{as} x\rightarrow +\infty,
+\end{displaymath}
+with a boundary condition at $x=0$, say $u|_{x=0}=0$.  To approximate
+this equation  on the bounded interval, $0\leq x\leq L_\infty$, we
+would normally impose the \textit{exact asymptotic boundary condition}
+for boundedness of the solution as $x\rightarrow\infty$,
+\begin{displaymath}
+u_x + \sqrt{\lambda} u = 0,
+\qquad \mathrm{at} x=L_\infty,
+\end{displaymath}
+derived using Levinson's Theorem (cf.\ Coppel [12]).
+\end{quotation}
+The reference is to \citet{Coppel65:SAB}.
+
+For this system,
+\begin{equation}
+A_\infty = \left[ \begin{array}{cc}
+        0 & 1 \\
+        \lambda & 0 
+        \end{array}
+        \right].
+\end{equation}
+The row eigenvectors are given by the rows of:
+\begin{equation}
+\left[ \begin{array}{cc}
+        \sqrt{\lambda} & 1 \\
+        \sqrt{\lambda} & -1 
+        \end{array}
+        \right]
+\left[ \begin{array}{cc}
+        0 & 1 \\
+        \lambda & 0 
+        \end{array}
+        \right]
+=
+\left[ \begin{array}{cc}
+        \sqrt{\lambda} & 0 \\
+        0 & -\sqrt{\lambda}
+        \end{array}
+        \right]
+\left[ \begin{array}{cc}
+        \sqrt{\lambda} & 1 \\
+        \sqrt{\lambda} & -1 
+        \end{array}
+        \right],
+\end{equation}
+so that the appropriate asymptotic boundary condition is
+\begin{equation}
+\left[\begin{array}{cc} \sqrt{\lambda} & 1\end{array}\right]
+\left[\begin{array}{c} u \\ u' \end{array}\right] = 0,
+\end{equation}
+which is exactly the equation given by \citet{Allen02:NM-92-197};
+however, the same equation would also be obtained by the matching
+method of \S\S,\ref{sec:Gill}--\ref{sec:Daniels}.
+
+\subsection{The direction of shooting}
+
+`When the $x$-domain is infinite, the natural way to integrate is from
+$x=L_\infty$ to $x=0$.' \citep[at p.~208]{Allen02:NM-92-197}.  If this
+were adopted, as was done much earlier by \citet{Mack76:JFM-73-497}, the
+boundary conditions of \S\,\ref{sec:Keller} would be replaced by using
+as initial conditions the eigenvectors of the asymptotic coefficient
+matrix corresponding to eigenvalues with negative real part.  This is
+a simpler way of ensuring that the large-$x$ solution consist only of
+bounded eigen-components.
+
+\bibliography{jl,bib} \bibliographystyle{abbrvnat}
+\end{document}

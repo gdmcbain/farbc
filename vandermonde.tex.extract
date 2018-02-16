@@ -1,0 +1,105 @@
+%% Removed from farbc.tex since I realized the much simpler derivation
+%% via the elementary symmetric functions. 
+
+Now,
+\begin{equation}
+\phi_j^{(i)} (x) = (-\lambda_j)^i \phi_j(x),
+\end{equation}
+so our condition is
+\begin{equation}
+\sum_{i=0}^{n} b_i \sum_{j=1}^{n} (-\lambda_j)^i \phi_j(x) = 0.
+\end{equation}
+
+This can be written in matrix form:
+\begin{equation}
+[\mathbf{b}^T]_{1\times (n+1)}
+ [\Lambda]_{(n+1)\times n}
+ [\mathbf{\Phi}]_{n\times 1} = 0.
+\end{equation}
+where $\mathbf{b}^T$ denotes the transpose of $\mathbf{b}$, and $\Lambda$
+is the $(n+1)\times n$ matrix with $(i,j)$ element $(-\lambda_j)^i$.
+For this to be satisfied even though the solutions $\phi_j(x)$ can
+have arbitrary magnitude (for a linear eigenvalue problem), the matrix
+$\mathbf{b}^T\Lambda$ must vanish:
+\begin{equation}
+\mathbf{b}^T \Lambda = 0.
+\end{equation}
+The transpose of this last equation is
+\begin{equation}
+\Lambda^T \mathbf{b} = 0.
+\end{equation}
+As $\Lambda^T$ is $n\times(n+1)$, the system is underdetermined, (of
+course, since a homogeneous linear boundary condition is unchanged by
+scaling its coefficients $\mathbf{b}$).  Here we choose to standardize
+the condition by setting the coefficient of the highest derivative to
+unity:
+\begin{equation}
+b_{n} = 1.
+\end{equation}
+To do this, partition the equation by removing the last column from
+the matrix:
+\begin{equation}
+\sum_{j=0}^{n-1} (-\lambda_i)^j b_j = - (-\lambda_i)^n b_n.
+\label{eqn:system}
+\end{equation}
+
+\subsection{The solution for the first few $n$}
+
+\subsubsection{$n=1,2$}
+
+The final results for one or two significant decay constants are given
+by \citet{Gill:JFM-35-775}:
+\begin{equation}
+\phi'(x)  + \lambda_1 \phi(x) = 0;
+\end{equation}
+and
+\begin{equation}
+\phi''(x) + (\lambda_1 + \lambda_2) \phi'(x)  + \lambda_1 \lambda_2
+\phi(x) = 0.
+\end{equation}
+
+\subsubsection{$n=3$}
+
+The extension to $n=3$ is straightforward:
+\begin{equation}
+\phi'''(x) + 
+(\lambda_1 + \lambda_2 + \lambda_3) \phi''(x) +
+(\lambda_1\lambda_2 + \lambda_1 \lambda_3 + \lambda_2 \lambda_3)
+\phi'(x) 
++ \lambda_1 \lambda_2 \lambda_3 \phi(x) = 0,
+\label{eqn:n=3}
+\end{equation}
+but let's see how this is derived.
+
+\begin{equation}
+\left[ \begin{array}{c} b_0 \\ b_1 \\ b_2 \end{array} \right]
+= - \left[ \begin{array}{ccc}
+1 & -\lambda_1 & \lambda_1^2 \\
+1 & -\lambda_2 & \lambda_2^2 \\
+1 & -\lambda_3 & \lambda_3^2 \end{array}\right]^{-1}
+\left[ (-\lambda_1)^3 (-\lambda_2)^3 (-\lambda_3)^3 \right] 
+\left[ b_3 \right]
+\end{equation}
+with the result:
+\begin{equation}
+\left[ \begin{array}{c} b_0 \\ b_1 \\ b_2 \end{array} \right]
+= 
+\left[ \begin{array}{c}  
+\lambda_1 \lambda_2 \lambda_3 \\ 
+(\lambda_1\lambda_2 + \lambda_1 \lambda_3 + \lambda_2 \lambda_3) \\
+(\lambda_1 + \lambda_2 + \lambda_3) \end{array} \right].
+\end{equation}
+
+\subsection{Numerical treatment for general $n$}
+
+It may be convenient to allow a computer program to be able to handle
+a general number $n$ of significant decay constants.  This section
+shows how to do this.
+
+Since the matrix $[(-\lambda_i)^j]$ is a \emph{Vandermonde matrix},
+the system (\ref{eqn:system}) can be solved in $O(n^2)$ operations as
+opposed to $O(n^3)$ for a general linear
+problem~\citet[p.~83]{Press:NRF-92}; a Fortran 90 subprogram to
+accomplish this, \texttt{polcoe}, is given by
+\citet[pp.~1047--8]{Press:NRF-96}.
+

@@ -1,0 +1,120 @@
+\begin{thebibliography}{20}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{{\tt #1}}\fi
+
+\bibitem[Allen and Bridges(2002)]{Allen02:NM-92-197}
+L.~Allen and T.~J. Bridges.
+\newblock Numerical exterior algebra and the compound matrix method.
+\newblock {\em Numer.\ Math.}, 92:\penalty0 197--232, 2002.
+
+\bibitem[Anderson et~al.(1999)Anderson, Bai, Bischof, Blackford, Demmel,
+  Dongarra, {Du Croz}, Greenbaum, Hammarling, McKenney, and
+  Sorenson]{Anderson99:LUG}
+E.~Anderson, Z.~Bai, C.~Bischof, S.~Blackford, J.~Demmel, J.~Dongarra, J.~{Du
+  Croz}, A.~Greenbaum, S.~Hammarling, A.~McKenney, and D.~Sorenson.
+\newblock {\em {LAPACK} Users' Guide}.
+\newblock SIAM, 3rd edition, 1999.
+
+\bibitem[Brown(1961)]{Brown61:BLF-913}
+W.~B. Brown.
+\newblock A stability criterion for three-dimensional laminar boundary layers.
+\newblock In G.~V. Lachmann, editor, {\em Boundary-Layer and Flow Control},
+  volume~2, pages 913--923. Pergamon, 1961.
+
+\bibitem[Coppel(1965)]{Coppel65:SAB}
+W.~A. Coppel.
+\newblock {\em Stability and Asymptotic Behaviour of Differential Equations}.
+\newblock D. C. Heath and Company, 1965.
+
+\bibitem[Daniels and Patterson(1997)]{Daniels97:JFM-335-57}
+P.~G. Daniels and J.~C. Patterson.
+\newblock On the long-wave instability of natural-convection boundary layers.
+\newblock {\em J. Fluid Mech.}, 335:\penalty0 57--73, 1997.
+
+\bibitem[Davey(1982)]{Davey82:SMC-137}
+A.~Davey.
+\newblock A difficult numerical calculation concerning the stability of the
+  {Blasius} boundary layer.
+\newblock In F.-H. Schroeder, editor, {\em Stability in the Mechanics of
+  Continua}, pages 137--144. Springer, 1982.
+
+\bibitem[Drazin and Reid(1981)]{Drazin81:HS}
+P.~G. Drazin and W.~H. Reid.
+\newblock {\em Hydrodynamic Stability}.
+\newblock Cambridge University Press, Cambridge, 1981.
+
+\bibitem[Eaton(2002)]{Eaton02:GOM}
+J.~W. Eaton.
+\newblock {\em {GNU} {Octave} Manual}.
+\newblock Network Theory, 2002.
+
+\bibitem[Fox(1990)]{Fox90:NST}
+L.~Fox.
+\newblock {\em The Numerical Solution of Two-Point Boundary Problems in
+  Ordinary Differential Equations}.
+\newblock Dover, 1990.
+
+\bibitem[Gill and Davey(1969)]{Gill69:JFM-35-775}
+A.~E. Gill and A.~Davey.
+\newblock Instabilities of a buoyancy driven system.
+\newblock {\em J. Fluid Mech.}, 35:\penalty0 775--798, 1969.
+
+\bibitem[Herron(1987)]{Herron87:SIREV-29-597}
+I.~H. Herron.
+\newblock The {Orr--Sommerfeld} equation on infinite intervals.
+\newblock {\em SIAM Rev.}, 29:\penalty0 597--620, 1987.
+
+\bibitem[Keller(1976)]{Keller76:NST}
+H.~B. Keller.
+\newblock {\em Numerical Solution of Two Point Boundary Value Problems},
+  volume~24 of {\em CBMS-NSF Regional Conference Series in Applied
+  Mathematics}.
+\newblock Society for Industrial and Applied Mathematics, 1976.
+
+\bibitem[Lentini and Keller(1980)]{Lentini80:SINUM-17-577}
+M.~Lentini and H.~B. Keller.
+\newblock Boundary value problems on semi-infinite intervals and their
+  numerical solution.
+\newblock {\em SIAM J. Num.\ Anal.}, 17:\penalty0 577--604, 1980.
+
+\bibitem[Mack(1976)]{Mack76:JFM-73-497}
+L.~M. Mack.
+\newblock A numerical study of the temporal eigenvalue spectrum of the
+  {Blasius} boundary layer.
+\newblock {\em J. Fluid Mech.}, 73\penalty0 (3):\penalty0 497--520, 1976.
+
+\bibitem[Nachtsheim(1963)]{Nachtsheim63:SFC}
+P.~R. Nachtsheim.
+\newblock Stability of free-convection boundary-layer flows.
+\newblock Tech.\ Note D-2089, NASA, 1963.
+
+\bibitem[Ng and Reid(1980)]{Ng80:JCP-38-275}
+B.~S. Ng and W.~H. Reid.
+\newblock On the numerical solution of the {Orr--Sommerfeld} problem:
+  Asymptotic initial conditions for shooting methods.
+\newblock {\em J. Comput.\ Phys.}, 38:\penalty0 275--293, 1980.
+
+\bibitem[Piaggio(1965)]{Piaggio65:ETD}
+H.~T.~H. Piaggio.
+\newblock {\em An Elementary Treatise on Differential Equations and their
+  Applications}.
+\newblock Bell, 1965.
+
+\bibitem[Plapp(1957)]{Plapp57:JAeS-24-318}
+J.~E. Plapp.
+\newblock The analytic study of laminar boundary-layer stability in free
+  convection.
+\newblock {\em J. Aeronaut.\ Sci.}, 24:\penalty0 318--319, 1957.
+
+\bibitem[Stewart(1973)]{Stewart73:IMC}
+G.~W. Stewart.
+\newblock {\em Introduction to Matrix Computations}.
+\newblock Academic, 1973.
+
+\bibitem[Turnbull(1952)]{Turnbull52:TE}
+H.~W. Turnbull.
+\newblock {\em Theory of Equations}.
+\newblock University Mathematical Texts. Oliver and Boyd, 5th edition, 1952.
+
+\end{thebibliography}
